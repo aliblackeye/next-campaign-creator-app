@@ -1,3 +1,6 @@
+
+import { motion } from 'framer-motion'
+
 interface ISelectItem {
     badge: string;
     title: string;
@@ -14,8 +17,19 @@ export default function SelectItem(props: ISelectItem) {
     // Destructuring
     const { footerLeftText, footerRightText, badge, subtitle, title, selected, onClick } = props
 
+    // Variables
+    const item = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+        }
+        
+    }
+
     return (
-        <div
+        <motion.div
+            variants={item}
             onClick={onClick}
             className={`transition-colors mb-3 p-4 rounded-[12px] border-2 border-border hover:bg-primary/5 ${selected ? "border-primary bg-primary/5" : ""}`}
         >
@@ -28,6 +42,6 @@ export default function SelectItem(props: ISelectItem) {
                     <div>{footerLeftText} {footerRightText}</div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }

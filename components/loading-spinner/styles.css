@@ -17,13 +17,3 @@
     }
   }
 }
-
-.loading-page .spinner {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: radial-gradient(farthest-side, #14b1b9 94%, #0000) top/9px 9px
-      no-repeat,
-    conic-gradient(#0000 30%, #14b1b9);
-  animation: spinner-c7wet2 1s infinite linear;
-}

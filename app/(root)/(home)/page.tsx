@@ -1,31 +1,49 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+// Services
+import CampaignServices from "@services/campaign-services";
+
+// Store
 import { useCampaignStore } from "@store/campaign-store";
+
 // Components
 import Button from "@components/form-elements/button";
+import { toast } from "react-toastify";
+
 export default function CreateCampaign() {
     // Variables
     const router = useRouter();
 
     // Stores
-    const { campaign, step, setStep } = useCampaignStore();
+    const { step, setStep } = useCampaignStore();
+
+    const [serverError, setServerError] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     // Functions
-    const startCampaign = () => {
-        setStep(1);
-        router.push("/create-campaign");
-        router.refresh();
+    const startCampaign = async () => {
+        setLoading(true);
+        const res = await CampaignServices.createCampaign();
+
+        if (res?.status === 200) {
+            setStep(1);
+            router.push("/create-campaign");
+            router.refresh();
+        }
+
+        else if (res?.status === 503 || res?.status === 500 || res?.status === 502) {
+            setServerError(`Status ${res?.status}: Sunucuya ulaşılamıyor.`);
+        }
 
     }
 
-
-
     if (step === 0) {
         return (
-            <div className="flex justify-center">
-                {/* <h1 className="text-2xl font-bold mb-4">BASE URL: {process.env.NEXT_PUBLIC_BASE_URL} </h1>
-                    */}
-                <Button status="primary" label="Kampanya Oluştur" onClick={startCampaign} size="text-md" className="!max-w-[215px]"/>
+            <div className="flex flex-col justify-center items-center gap-4">
+                {serverError && <h1></h1>}
+                <Button status="primary" label="Kampanya Oluştur" loading={loading} onClick={startCampaign} size="text-md" className="!max-w-[215px]" />
             </div>
         )
     };

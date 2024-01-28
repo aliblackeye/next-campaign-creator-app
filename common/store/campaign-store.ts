@@ -17,9 +17,10 @@ export const useCampaignStore = create<CampaignStore>((set) => ({
   campaign: {
     track: null,
     currency: "TRY",
-    genreList: [],
+    genreList: null,
     selectedGenres: [],
     package: null,
+    packages: null,
     notPublished: false,
     startDate: null,
     dates: [],

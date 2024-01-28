@@ -11,7 +11,7 @@ import { useCampaignStore } from '@store/campaign-store'
 import CampaignServices from '@services/campaign-services'
 
 // Partials
-import StepFooter from '../_partials/StepFooter'
+import StepFooter from '../_partials/StepFooter';
 
 // Components
 import Box from '@components/box'
@@ -60,8 +60,6 @@ export default function Step1() {
 
 
     const handleChangeSong = async (song: any) => {
-
-
         setCampaign({ ...campaign, track: song })
     }
 
@@ -116,7 +114,7 @@ export default function Step1() {
                 />
             </Box>
 
-            <StepFooter disabled={!campaign.notPublished && !campaign.track} />
+            <StepFooter disabled={!campaign.notPublished && !campaign.track}  animationDisabled />
         </motion.div>
     )
 }

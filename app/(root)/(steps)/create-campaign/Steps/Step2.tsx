@@ -1,7 +1,11 @@
 "use client";
 
 // Libs
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
+
+// Services
+import CampaignServices from '@services/campaign-services';
 
 // Store
 import { useCampaignStore } from '@store/campaign-store';
@@ -21,34 +25,61 @@ import Select from '@components/form-elements/select'
 
 export default function Step2() {
 
+    // Variables
+    const container = {
+        hidden: { opacity: 1, scale: 0 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                delayChildren: 4,
+                staggerChildren: 4
+            }
+        }
+    }
+    
     // Stores
     const { campaign, setCampaign } = useCampaignStore();
-
-    // Variables
 
     // States
     const [currency, setCurrency] = useState<"USD" | "TRY">('TRY')
 
     // Functions
-    const handleChangeGenre = (newValues: any) => {
+    const fetchGenres = async () => {
+        const res = await CampaignServices.getTrackGenres();
+        const allGenres = res?.data.map((genre: string, index: number) => ({
+            label: genre.charAt(0).toUpperCase() + genre.slice(1),
+            value: index.toString()
+        }));
+        setCampaign({ ...campaign, genreList: allGenres });
+    };
 
+    const handleChangeGenre = (newValues: any) => {
         const newValuesFormatted = newValues.map((genre: any) => ({
             label: genre.label,
             value: genre.value
         }))
-
         setCampaign({ ...campaign, selectedGenres: newValuesFormatted });
     };
-
 
     const handleRemoveGenre = (removed: any) => {
         const filteredGenres = campaign.selectedGenres.filter(g => g.value !== removed.value);
         setCampaign({ ...campaign, selectedGenres: filteredGenres });
     }
 
+    // Effects  
+    useEffect(() => {
+
+        if (campaign.genreList === null) {
+            fetchGenres();
+        }
+    }, []);
 
     return (
-        <div
+        <motion.div
+            variants={container}
+            initial="hidden"
+            animate="visible"
             className="flex justify-center flex-col gap-11">
             {/* BÖLGE SEÇİMİ */}
             <Box title='Bölgeni seç' subTitle='Kampanyayı yayınlamak istediğin bölgeyi seç.'>
@@ -59,9 +90,7 @@ export default function Step2() {
                 <Select
                     key={campaign.selectedGenres?.length}
                     placeholder="Tür ara"
-                    options={
-                        campaign.genreList
-                    }
+                    options={campaign.genreList || []}
                     value={campaign.selectedGenres.map((genre: any) => {
                         return { label: genre.label, value: genre.value }
                     })}
@@ -81,7 +110,7 @@ export default function Step2() {
                     ))}
                 </div>
             </Box>
-            <StepFooter disabled={campaign.selectedGenres.length === 0} />
-        </div>
+            <StepFooter disabled={campaign.selectedGenres.length === 0} animationDisabled />
+        </motion.div>
     )
 }

@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 
-// Fonts
-import { alata } from "@fonts/fonts";
-
 // Layouts
 import CampaignStepHeader from "@layouts/CampaignStepHeader/CampaignStepHeader";
 
@@ -15,16 +12,14 @@ export default function CampaignLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
-    <html lang="en">
-      <body className={`${alata.className}`}>
-        <CampaignStepHeader />
-        <div className="container">
-          {children}
-        </div>
-
-
-      </body>
-    </html>
+    <>
+      <CampaignStepHeader />
+      <div className="container">
+        {children}
+      </div>
+    </>
   );
 }

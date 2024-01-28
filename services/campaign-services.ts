@@ -1,6 +1,12 @@
-import axios from "axios";
+import axios from "@configs/axios";
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+const createCampaign = async () => {
+  try {
+    return await axios.get(`/create-campaign`);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const getSearchSong = async (search: string) => {
   try {
@@ -33,13 +39,14 @@ const getDates = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 const CampaignServices = {
   getSearchSong,
   getTrackGenres,
   getPackages,
-  getDates
+  getDates,
+  createCampaign,
 };
 
 export default CampaignServices;
