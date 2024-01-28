@@ -168,7 +168,8 @@ export default function Step() {
     };
 
     fetchDates();
-  }, []);
+  }, [  campaign.genreList,
+    setCampaign,]);
 
   /* ADIM 1 - PARÇA SEÇİMİ */
   if (step === 1) {
