@@ -112,9 +112,14 @@ export default function Step5() {
                             <div className='flex justify-between font-semibold'>
                                 <h1>Toplam</h1>
                                 {/* PAKET VE TARİH FİYAT TOPLAMI */}
-                                <h1>{
-                                    campaign.startDate?.price ? campaign.package?.price + campaign.startDate?.price : campaign.package?.price
-                                } ₺</h1>
+                                <h1>
+                                    {
+                                        campaign.startDate?.price ?
+                                            (campaign.package?.currency != null && campaign.package?.currency === "USD" ? (Number(campaign.package?.price) * 30) : campaign.package?.price) + campaign.startDate?.price
+                                            :
+                                            (campaign.package?.currency != null && campaign.package?.currency === "USD" ? (Number(campaign.package?.price) * 30) : campaign.package?.price)
+                                    }
+                                     ₺</h1>
                             </div>
 
                         </div>
