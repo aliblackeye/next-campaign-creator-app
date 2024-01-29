@@ -41,8 +41,6 @@ export default function Step2() {
     // Stores
     const { campaign, setCampaign } = useCampaignStore();
 
-    // States
-    const [currency, setCurrency] = useState<"USD" | "TRY">('TRY')
 
     // Functions
     const fetchGenres = async () => {
@@ -83,7 +81,7 @@ export default function Step2() {
             className="flex justify-center flex-col gap-11">
             {/* BÖLGE SEÇİMİ */}
             <Box title='Bölgeni seç' subTitle='Kampanyayı yayınlamak istediğin bölgeyi seç.'>
-                <CurrencySelector currency={currency} setCurrency={setCurrency} />
+                <CurrencySelector   />
             </Box>
             {/* PARÇA TÜRÜ SEÇİMİ */}
             <Box title='Parçanın türünü seç' subTitle='Seçtiğin parçanın türlerini belirle.'>

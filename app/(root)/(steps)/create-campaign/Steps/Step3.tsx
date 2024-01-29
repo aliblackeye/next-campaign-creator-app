@@ -51,9 +51,7 @@ export default function Step3() {
 
     // Effects
     useEffect(() => {
-        if (campaign.packages == null) {
             fetchPackages();
-        }
     }, []);
 
     return (

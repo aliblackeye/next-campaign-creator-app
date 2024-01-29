@@ -96,7 +96,7 @@ export default function Step5() {
                             <h1 className='font-semibold'>Ödeme detayları</h1>
                             <div className='flex justify-between'>
                                 <span>Paket</span>
-                                <span>{campaign.package?.price} ₺</span>
+                                <span>{campaign.package?.currency != null && campaign.package?.currency === "USD" ? `${(Number(campaign.package?.price) * 30).toString()}` : campaign.package?.price} ₺</span>
                             </div>
                             {campaign.startDate?.price ?
                                 (<div className='flex justify-between'>
